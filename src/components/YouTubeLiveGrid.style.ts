@@ -6,6 +6,13 @@ const useStyles = createUseStyles({
     gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))',
     gridGap: '15px',
   },
+  loading: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 'calc(100vh - 64px)',
+    fontSize: '2rem',
+  },
 });
 
 export default useStyles;

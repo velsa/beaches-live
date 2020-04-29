@@ -7,6 +7,15 @@ const useStyles = createUseStyles({
     alignItems: 'center',
     margin: '0.7rem',
   },
+  loading: {
+    // position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // height: '100%',
+    width: '100%',
+    background: 'rgb(200, 200, 200, 0.2)',
+  },
   videoThumb: {
     position: 'absolute',
   },

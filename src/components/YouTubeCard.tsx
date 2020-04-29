@@ -14,7 +14,7 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({ video, size = 'high' }) => {
   const [videoEmbed, setVideoEmbed] = useState<any>(undefined);
 
   const opts: Options = {
-    height: video.thumbnails[size].height.toString(),
+    height: videoEmbed ? video.thumbnails[size].height.toString() : '0',
     width: video.thumbnails[size].width.toString(),
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
@@ -27,25 +27,36 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({ video, size = 'high' }) => {
   };
 
   const handleMouseOver = (ev: any) => {
-    videoEmbed.playVideo();
-    setIsPlaying(true);
-    console.log(`PLAYING ${video.id}`);
+    if (videoEmbed) {
+      videoEmbed.playVideo();
+      setIsPlaying(true);
+      // console.log(`PLAYING ${video.id}`);
+    }
   };
 
   const handleMouseOut = (ev: any) => {
-    videoEmbed.pauseVideo();
-    setIsPlaying(false);
-    console.log(`NOT PLAYING ${video.id}`);
+    if (videoEmbed) {
+      videoEmbed.pauseVideo();
+      setIsPlaying(false);
+      // console.log(`NOT PLAYING ${video.id}`);
+    }
   };
 
   const onReady = (event: any) => {
-    console.log(`onReady :>> ${video.id}`);
+    // console.log(`onReady :>> ${video.id}`);
     setVideoEmbed(event.target);
   };
 
   return (
     <div className={classes.videoCard} key={video.id}>
-      {videoEmbed === undefined && <div>loading...</div>}
+      {!videoEmbed && (
+        <div
+          className={classes.loading}
+          style={{ height: video.thumbnails[size].height }}
+        >
+          loading...
+        </div>
+      )}
       {!isPlaying && videoEmbed && (
         <img
           className={classes.videoThumb}

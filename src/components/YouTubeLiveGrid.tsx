@@ -9,6 +9,7 @@ interface IYouTubeLiveGrid {
 
 const YouTubeLiveGrid: React.FC<IYouTubeLiveGrid> = ({ playlistId }) => {
   const [loadedAPI, setLoadedAPI] = useState(false);
+  const [reloadUseEffect, setReloadUseEffect] = useState(0);
   const [playlist, setPlaylist] = useState<IYouTubeVideo[] | undefined>(
     undefined
   );
@@ -17,6 +18,7 @@ const YouTubeLiveGrid: React.FC<IYouTubeLiveGrid> = ({ playlistId }) => {
 
   function loadClient() {
     // const gapi = (window as any).gapi;
+    // if (!gapi || !gapi.client) setLoadedAPI(false);
     console.log('gapi :>> ');
     gapi.client.setApiKey('AIzaSyDa_WqEf-WnqaO5EIZrDIdduA-0Lon8MRE');
     return gapi.client
@@ -63,17 +65,24 @@ const YouTubeLiveGrid: React.FC<IYouTubeLiveGrid> = ({ playlistId }) => {
   }
   useEffect(() => {
     // Wait for script to load
-    if (!gapi && !gapi.client) return;
+    if (!gapi.client) {
+      setTimeout(() => {
+        setReloadUseEffect(reloadUseEffect + 1);
+      }, 100);
+      return;
+    }
 
     // Init Google API and get my playlist
     if (!loadedAPI) loadClient();
-    else getPlaylist();
+    else if (!playlist) getPlaylist();
+
     return () => {
       // cleanup
     };
-  }, [gapi, loadedAPI]);
+  }, [reloadUseEffect, gapi, loadedAPI]);
 
-  if (!playlist) return <div>loading...</div>;
+  if (!playlist)
+    return <div className={classes.loading}>Searching for live streams...</div>;
 
   return (
     <div className={classes.playlistContainer}>
