@@ -8,7 +8,7 @@ interface IYouTubeCard {
   size?: 'medium' | 'standard' | 'high';
 }
 
-const YouTubeCard: React.FC<IYouTubeCard> = ({ video, size = 'high' }) => {
+const YouTubeCard: React.FC<IYouTubeCard> = ({ video, size = 'medium' }) => {
   const classes = useStyles();
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoEmbed, setVideoEmbed] = useState<any>(undefined);
@@ -22,7 +22,6 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({ video, size = 'high' }) => {
       controls: 0,
       modestbranding: 1,
       fs: 1,
-      // playsinline: 1,
     },
   };
 
@@ -30,7 +29,6 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({ video, size = 'high' }) => {
     if (videoEmbed) {
       videoEmbed.playVideo();
       setIsPlaying(true);
-      // console.log(`PLAYING ${video.id}`);
     }
   };
 
@@ -38,12 +36,10 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({ video, size = 'high' }) => {
     if (videoEmbed) {
       videoEmbed.pauseVideo();
       setIsPlaying(false);
-      // console.log(`NOT PLAYING ${video.id}`);
     }
   };
 
   const onReady = (event: any) => {
-    // console.log(`onReady :>> ${video.id}`);
     setVideoEmbed(event.target);
   };
 

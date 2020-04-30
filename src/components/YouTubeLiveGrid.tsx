@@ -10,6 +10,7 @@ interface IYouTubeLiveGrid {
 const YouTubeLiveGrid: React.FC<IYouTubeLiveGrid> = ({ playlistId }) => {
   const [loadedAPI, setLoadedAPI] = useState(false);
   const [reloadUseEffect, setReloadUseEffect] = useState(0);
+  const [cardSize, setCardSize] = useState<'medium' | 'high'>('medium');
   const [playlist, setPlaylist] = useState<IYouTubeVideo[] | undefined>(
     undefined
   );
@@ -84,10 +85,17 @@ const YouTubeLiveGrid: React.FC<IYouTubeLiveGrid> = ({ playlistId }) => {
   if (!playlist)
     return <div className={classes.loading}>Searching for live streams...</div>;
 
+  // Watch for window size
+  window.matchMedia('(max-width: 480px)').addListener(() => {
+    setCardSize(
+      window.matchMedia('(max-width: 480px)').matches ? 'medium' : 'high'
+    );
+  });
+
   return (
     <div className={classes.playlistContainer}>
       {playlist.map((video) => (
-        <YouTubeCard key={video.id} video={video} />
+        <YouTubeCard key={video.id} video={video} size={cardSize} />
       ))}
     </div>
   );
