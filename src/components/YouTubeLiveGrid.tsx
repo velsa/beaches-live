@@ -17,26 +17,29 @@ const YouTubeLiveGrid: React.FC<IYouTubeLiveGrid> = ({ playlistId }) => {
   const gapi = (window as any).gapi;
   const classes = useStyles();
 
+  // Initialize card size accorind to media query
+  useEffect(() => {
+    updateCardSize();
+  });
+
+  // Load Google API client
   function loadClient() {
-    // const gapi = (window as any).gapi;
-    // if (!gapi || !gapi.client) setLoadedAPI(false);
-    console.log('gapi :>> ');
     gapi.client.setApiKey('AIzaSyDa_WqEf-WnqaO5EIZrDIdduA-0Lon8MRE');
     return gapi.client
       .load('https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest')
       .then(
         function () {
-          console.log('GAPI client loaded for API');
+          // console.log('GAPI client loaded for API');
           setLoadedAPI(true);
         },
         function (err: any) {
-          console.error('Error loading GAPI client for API', err);
+          console.error('Error loading GAPI client: ', err);
         }
       );
   }
+
   // Make sure the client is loaded and sign-in is complete before calling this method.
   function getPlaylist() {
-    // const gapi = (window as any).gapi;
     return gapi.client.youtube.playlistItems
       .list({
         part: 'snippet',
@@ -46,7 +49,7 @@ const YouTubeLiveGrid: React.FC<IYouTubeLiveGrid> = ({ playlistId }) => {
       .then(
         function (response: any) {
           // Handle the results here (response.result has the parsed body).
-          console.log('Response', response);
+          // console.log('Response', response);
           const videos: IYouTubeVideo[] = [];
           for (let item of response.result.items) {
             videos.push({
@@ -57,15 +60,16 @@ const YouTubeLiveGrid: React.FC<IYouTubeLiveGrid> = ({ playlistId }) => {
             });
           }
           setPlaylist(videos);
-          console.log('Videos', videos);
+          // console.log('Videos', videos);
         },
         function (err: any) {
-          console.error('Execute error', err);
+          console.error('getPlaylist error: ', err);
         }
       );
   }
+
   useEffect(() => {
-    // Wait for script to load
+    // Wait for Google API script to load
     if (!gapi.client) {
       setTimeout(() => {
         setReloadUseEffect(reloadUseEffect + 1);
@@ -76,21 +80,18 @@ const YouTubeLiveGrid: React.FC<IYouTubeLiveGrid> = ({ playlistId }) => {
     // Init Google API and get my playlist
     if (!loadedAPI) loadClient();
     else if (!playlist) getPlaylist();
-
-    return () => {
-      // cleanup
-    };
   }, [reloadUseEffect, gapi, loadedAPI]);
 
   if (!playlist)
     return <div className={classes.loading}>Searching for live streams...</div>;
 
   // Watch for window size
-  window.matchMedia('(max-width: 480px)').addListener(() => {
+  function updateCardSize() {
     setCardSize(
       window.matchMedia('(max-width: 480px)').matches ? 'medium' : 'high'
     );
-  });
+  }
+  window.matchMedia('(max-width: 480px)').addListener(updateCardSize);
 
   return (
     <div className={classes.playlistContainer}>

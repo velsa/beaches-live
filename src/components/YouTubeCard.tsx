@@ -50,7 +50,7 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({ video, size = 'medium' }) => {
           className={classes.loading}
           style={{ height: video.thumbnails[size].height }}
         >
-          loading...
+          Loading live stream...
         </div>
       )}
       {!isPlaying && videoEmbed && (
