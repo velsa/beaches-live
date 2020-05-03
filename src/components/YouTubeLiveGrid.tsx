@@ -14,6 +14,7 @@ const YouTubeLiveGrid: React.FC<IYouTubeLiveGrid> = ({ playlistId }) => {
   const [playlist, setPlaylist] = useState<IYouTubeVideo[] | undefined>(
     undefined
   );
+  const [loadedCards, setLoadedCards] = useState(0);
   const gapi = (window as any).gapi;
   const classes = useStyles();
 
@@ -93,10 +94,25 @@ const YouTubeLiveGrid: React.FC<IYouTubeLiveGrid> = ({ playlistId }) => {
   }
   window.matchMedia('(max-width: 480px)').addListener(updateCardSize);
 
+  const onCardReady = (videoId: string) => {
+    setLoadedCards(loadedCards + 1);
+    console.log('loadedCards :>> ', loadedCards);
+  };
+
   return (
     <div className={classes.playlistContainer}>
+      {loadedCards < playlist.length && (
+        <div className={classes.overlay}>
+          <h1>Loading grid...</h1>{' '}
+        </div>
+      )}
       {playlist.map((video) => (
-        <YouTubeCard key={video.id} video={video} size={cardSize} />
+        <YouTubeCard
+          key={video.id}
+          video={video}
+          size={cardSize}
+          onReady={() => onCardReady(video.id)}
+        />
       ))}
     </div>
   );

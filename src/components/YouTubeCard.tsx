@@ -6,9 +6,14 @@ import { IYouTubeVideo, IYouTubeThumb } from './YouTubeTypes';
 interface IYouTubeCard {
   video: IYouTubeVideo;
   size?: 'medium' | 'standard' | 'high';
+  onReady?: () => void;
 }
 
-const YouTubeCard: React.FC<IYouTubeCard> = ({ video, size = 'medium' }) => {
+const YouTubeCard: React.FC<IYouTubeCard> = ({
+  video,
+  size = 'medium',
+  ...props
+}) => {
   const classes = useStyles();
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoEmbed, setVideoEmbed] = useState<any>(undefined);
@@ -41,6 +46,7 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({ video, size = 'medium' }) => {
 
   const onReady = (event: any) => {
     setVideoEmbed(event.target);
+    props.onReady && props.onReady();
   };
 
   return (

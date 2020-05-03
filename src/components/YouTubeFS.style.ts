@@ -4,6 +4,7 @@ const useStyles = createUseStyles({
   container: {
     width: '100vw',
     height: '100vh',
+    background: 'black',
   },
 });
 

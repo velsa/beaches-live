@@ -5,7 +5,7 @@ const useStyles = createUseStyles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    margin: '0.7rem',
+    // margin: '0.7rem',
   },
   loading: {
     // position: 'absolute',
