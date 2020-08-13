@@ -19,8 +19,8 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({
   const [videoEmbed, setVideoEmbed] = useState<any>(undefined);
 
   const opts: Options = {
-    height: videoEmbed ? video.thumbnails[size].height.toString() : '0',
-    width: video.thumbnails[size].width.toString(),
+    height: videoEmbed ? video.thumbnails[size] ? video.thumbnails[size].height.toString() : "100" : '0',
+    width: video.thumbnails[size] ? video.thumbnails[size].width.toString() : "200",
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 0,
