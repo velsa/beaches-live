@@ -17,10 +17,12 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({
   const classes = useStyles();
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoEmbed, setVideoEmbed] = useState<any>(undefined);
+  
+  const thumbWidth = 
 
   const opts: Options = {
-    height: videoEmbed ? video.thumbnails[size] ? video.thumbnails[size].height.toString() : "100" : '0',
-    width: video.thumbnails[size] ? video.thumbnails[size].width.toString() : "200",
+//     height: videoEmbed ? video.thumbnails[size] ? video.thumbnails[size].height.toString() : "100" : '0',
+//     width: video.thumbnails[size] ? video.thumbnails[size].width.toString() : "200",
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 0,
