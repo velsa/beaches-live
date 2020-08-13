@@ -18,8 +18,6 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoEmbed, setVideoEmbed] = useState<any>(undefined);
   
-  const thumbWidth = 
-
   const opts: Options = {
 //     height: videoEmbed ? video.thumbnails[size] ? video.thumbnails[size].height.toString() : "100" : '0',
 //     width: video.thumbnails[size] ? video.thumbnails[size].width.toString() : "200",
