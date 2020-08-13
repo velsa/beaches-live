@@ -18,7 +18,7 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoEmbed, setVideoEmbed] = useState<any>(undefined);
   
-  const videoHeight = videoEmbed && video.thumbnails[size] ? video.thumbnails[size].height.toString() : "100" : '0';
+  const videoHeight = videoEmbed && video.thumbnails[size] ? video.thumbnails[size].height.toString() : "100";
   const videoWidth = video.thumbnails[size] ? video.thumbnails[size].width.toString() : "200";
   const opts: Options = {
     height: videoHeight,
