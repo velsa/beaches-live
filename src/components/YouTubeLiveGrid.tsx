@@ -53,12 +53,14 @@ const YouTubeLiveGrid: React.FC<IYouTubeLiveGrid> = ({ playlistId }) => {
           // console.log('Response', response);
           const videos: IYouTubeVideo[] = [];
           for (let item of response.result.items) {
-            videos.push({
-              id: item.snippet.resourceId.videoId,
-              title: item.snippet.title,
-              thumbnails: item.snippet.thumbnails,
-              publishedAt: item.snippet.publishedAt,
-            });
+            if (item.snippet) {
+              videos.push({
+                id: item.snippet.resourceId.videoId,
+                title: item.snippet.title,
+                thumbnails: item.snippet.thumbnails,
+                publishedAt: item.snippet.publishedAt,
+              });
+            }
           }
           setPlaylist(videos);
           // console.log('Videos', videos);
