@@ -18,9 +18,11 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoEmbed, setVideoEmbed] = useState<any>(undefined);
   
+  const videoHeight = videoEmbed && video.thumbnails[size] ? video.thumbnails[size].height.toString() : "100" : '0';
+  const videoWidth = video.thumbnails[size] ? video.thumbnails[size].width.toString() : "200";
   const opts: Options = {
-//     height: videoEmbed ? video.thumbnails[size] ? video.thumbnails[size].height.toString() : "100" : '0',
-//     width: video.thumbnails[size] ? video.thumbnails[size].width.toString() : "200",
+    height: videoHeight,
+    width: videoWidth,
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 0,
@@ -54,7 +56,7 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({
       {!videoEmbed && (
         <div
           className={classes.loading}
-          style={{ height: video.thumbnails[size].height }}
+          style={{ height: videoHeight }}
         >
           Loading live stream...
         </div>
