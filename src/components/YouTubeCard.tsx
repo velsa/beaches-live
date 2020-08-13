@@ -20,6 +20,7 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({
   
   const videoHeight = videoEmbed && video.thumbnails[size] ? video.thumbnails[size].height.toString() : "100";
   const videoWidth = video.thumbnails[size] ? video.thumbnails[size].width.toString() : "200";
+  const videoURL = video.thumbnails[size] ? video.thumbnails[size].url : "";
   const opts: Options = {
     height: videoHeight,
     width: videoWidth,
@@ -64,7 +65,7 @@ const YouTubeCard: React.FC<IYouTubeCard> = ({
       {!isPlaying && videoEmbed && (
         <img
           className={classes.videoThumb}
-          src={video.thumbnails[size].url}
+          src={videoURL}
           alt={video.title}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
